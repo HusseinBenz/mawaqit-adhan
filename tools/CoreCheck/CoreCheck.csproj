@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Console harness for the non-UI half of the app. It hits the live mawaqit
+    site, so it needs a network connection. See tools/README.md for how to run
+    it, including how to check masjids other than the default omar-witten.
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <AutomaticallyUseReferenceAssemblyPackages>false</AutomaticallyUseReferenceAssemblyPackages>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>corecheck</AssemblyName>
+    <RootNamespace>CoreCheck</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web.Extensions" />
+    <Compile Include="..\..\src\MawaqitAdhan\Core\Compatibility.cs" />
+    <Compile Include="..\..\src\MawaqitAdhan\Core\TimeZones.cs" />
+    <EmbeddedResource Include="..\..\src\MawaqitAdhan\Core\windows-zones.tsv" />
+    <Compile Include="Program.cs" />
+    <Compile Include="..\..\src\MawaqitAdhan\Core\MawaqitClient.cs" />
+    <Compile Include="..\..\src\MawaqitAdhan\Core\Timetable.cs" />
+    <Compile Include="..\..\src\MawaqitAdhan\Core\PrayerSchedule.cs" />
+    <Compile Include="..\..\src\MawaqitAdhan\Core\AppPaths.cs" />
+    <Compile Include="..\..\src\MawaqitAdhan\Core\Log.cs" />
+    <Compile Include="..\..\src\MawaqitAdhan\Core\HijriDate.cs" />
+    <Compile Include="..\..\src\MawaqitAdhan\Core\AudioLibrary.cs" />
+  </ItemGroup>
+
+</Project>
