@@ -81,7 +81,7 @@ powershell -NoProfile -File tools/package.ps1
 ```
 
 The packaging script produces the portable folder, ZIP and SHA-256 checksum under
-`dist`. The ZIP is approximately 10 MB; almost all of that is the five MP3 files.
+`dist`. The beta ZIP is approximately 11.4 MiB; almost all of that is the five MP3 files.
 
 ```powershell
 # Offline regression checks; settings/data are isolated automatically.
