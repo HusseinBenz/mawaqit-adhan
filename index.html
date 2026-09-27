@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Mawaqit Adhan — a small Windows tray app that calls the adhan using your own masjid's Mawaqit timetable. No account, no installer, no admin rights.">
+<meta name="theme-color" content="#0a1722">
+<title>Mawaqit Adhan</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230d2741'/%3E%3Cpath d='M8 8h16v16H8zM16 8v16' stroke='%23d2b779' stroke-width='2' fill='none'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="geo-pattern" aria-hidden="true"></div>
+
+<header class="site-header">
+  <a class="brand" href="index.html">
+    <span class="brand-mark">🕌</span>
+    <span class="brand-name">Mawaqit Adhan</span>
+  </a>
+  <a class="back-link" href="https://husseinbenz.github.io/islamic-projects/">All projects ↗</a>
+</header>
+
+<main>
+  <section class="hero">
+    <p class="eyebrow">Windows tray app · v1.0.0-beta.1</p>
+    <h1>The adhan, called on time, from your own masjid</h1>
+    <p class="lede">Mawaqit Adhan sits quietly in your Windows tray and plays the call to prayer using a masjid's own published Mawaqit timetable — five daily prayers, time-zone and DST aware, no account and no server required.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="https://github.com/HusseinBenz/mawaqit-adhan/releases/download/v1.0.0-beta.1/MawaqitAdhan-1.0.0-beta.1.zip">Download v1.0.0-beta.1 (.zip, ~11.4 MB)</a>
+      <a class="btn btn-ghost" href="https://github.com/HusseinBenz/mawaqit-adhan/releases">All releases</a>
+    </div>
+    <p class="checksum">SHA-256: <code>ECBE343558360404F56BE596B9E81DCC50DDCFE2A44D73B82D759270C58F7578</code></p>
+  </section>
+
+  <section class="features">
+    <h2>What it does</h2>
+    <div class="grid">
+      <div class="feature">
+        <h3>Any Mawaqit masjid</h3>
+        <p>Search by name or city, or paste a Mawaqit link. The full-year timetable is cached for offline use and refreshed automatically.</p>
+      </div>
+      <div class="feature">
+        <h3>Five bundled adhans</h3>
+        <p>Five recordings included, with a separate Fajr voice/volume, per-prayer switches, and support for additional or imported recordings.</p>
+      </div>
+      <div class="feature">
+        <h3>Correct times, everywhere</h3>
+        <p>Time-zone and daylight-saving handling, including half-hour DST transitions, mapped from the masjid's own IANA zone.</p>
+      </div>
+      <div class="feature">
+        <h3>Iqama &amp; Jumu'ah</h3>
+        <p>Iqama offsets or fixed times, Hijri adjustment, and a separate Friday Jumu'ah display alongside the regular Dhuhr call.</p>
+      </div>
+      <div class="feature">
+        <h3>Plays well with other audio</h3>
+        <p>Fades other apps' volume down for the adhan and restores it afterward, with a media play/pause signal in between.</p>
+      </div>
+      <div class="feature">
+        <h3>No installer, no telemetry</h3>
+        <p>Portable executable, no admin rights, no third-party runtime beyond .NET Framework 4.8 (already on Windows 10/11), and nothing phoned home.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="requirements">
+    <h2>Requirements</h2>
+    <ul>
+      <li>Windows 7 SP1, 8.1, 10 (1607+) or 11, with .NET Framework 4.8 or later.</li>
+      <li>The app must be running and the PC awake to call prayers on time.</li>
+      <li>Internet access to look up a masjid and refresh its timetable; a cached calendar keeps working offline afterward.</li>
+    </ul>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>Part of <a href="https://husseinbenz.github.io/islamic-projects/">Hussein Benz's Islamic projects</a>.</p>
+</footer>
+</body>
+</html>
