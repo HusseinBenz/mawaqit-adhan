@@ -10,8 +10,11 @@
 :root {
   --font-display: "Instrument Serif", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --font-ui: "Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
-  --font-kufi: "Reem Kufi", "Geeza Pro", "Segoe UI", sans-serif;
-  --font-naskh: "Amiri", "Traditional Arabic", "Geeza Pro", serif;
+  /* Arabic set — three families, three jobs (see "Arabic typography" below) */
+  --font-ar-ui: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, "Geeza Pro", sans-serif;
+  --font-ar-text: "Noto Naskh Arabic", "IBM Plex Sans Arabic", "Traditional Arabic", serif;
+  --font-naskh: "Amiri", "Noto Naskh Arabic", "Traditional Arabic", serif;
+  --font-kufi: var(--font-ar-ui);
   --font-mono: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, monospace;
 
   --r-xs: 8px; --r-sm: 12px; --r-md: 18px; --r-lg: 24px; --r-xl: 32px; --r-pill: 999px;
@@ -109,7 +112,19 @@ h1, h2, h3, h4 { margin: 0; font-weight: 700; line-height: 1.2; }
 ::selection { background: var(--primary-soft); color: var(--text); }
 :focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; border-radius: 6px; }
 [hidden] { display: none !important; }
-[dir="rtl"] body, body[dir="rtl"] { font-family: var(--font-naskh), var(--font-ui); }
+/* ---------- Arabic typography ----------
+   The same set in every project:
+   · IBM Plex Sans Arabic — interface: buttons, labels, navigation, short text
+   · Noto Naskh Arabic   — reading text and headings (Naskh is the most legible
+                            style for continuous Arabic)
+   · Amiri               — Qur'an and hadith wording only (.sk-ar)
+   Arabic is set a little larger with taller lines, and is never letter-spaced,
+   upper-cased or italicised — spacing breaks the joined letters. */
+[dir="rtl"] body, body[dir="rtl"] { font-family: var(--font-ar-ui); font-size: 17px; line-height: 1.75; }
+:lang(ar) { letter-spacing: 0 !important; font-style: normal !important; text-transform: none !important; }
+[dir="rtl"] .sk-lede, [dir="rtl"] .sk-read { font-family: var(--font-ar-text); line-height: 1.95; }
+[dir="rtl"] .sk-lede { font-size: clamp(18px, 1.7vw, 21px); }
+.sk-ar { font-family: var(--font-naskh); line-height: 2; font-style: normal; }
 
 .sk-container { width: 100%; max-width: 1240px; margin-inline: auto; padding-inline: var(--gutter); }
 .sk-visually-hidden { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
@@ -124,9 +139,10 @@ h1, h2, h3, h4 { margin: 0; font-weight: 700; line-height: 1.2; }
 .sk-ar { font-family: var(--font-naskh); }
 .sk-kufi { font-family: var(--font-kufi); }
 .sk-muted { color: var(--text-3); }
-[dir="rtl"] .sk-display { font-family: var(--font-kufi); letter-spacing: 0; line-height: 1.3; }
+[dir="rtl"] .sk-display { font-family: var(--font-ar-text); font-weight: 700; letter-spacing: 0; line-height: 1.45; }
 [dir="rtl"] .sk-display em { font-style: normal; }
-[dir="rtl"] .sk-eyebrow { letter-spacing: 0; text-transform: none; font-family: var(--font-kufi); font-size: 14px; font-weight: 500; }
+[dir="rtl"] .sk-eyebrow { letter-spacing: 0; text-transform: none; font-family: var(--font-ar-ui); font-size: 14px; font-weight: 600; }
+[dir="rtl"] .sk-btn, [dir="rtl"] .sk-chip, [dir="rtl"] .sk-tag { font-family: var(--font-ar-ui); }
 
 /* ---------- Buttons ---------- */
 .sk-btn {
@@ -250,7 +266,9 @@ h1, h2, h3, h4 { margin: 0; font-weight: 700; line-height: 1.2; }
 .sk-brand:hover { color: var(--text); }
 .sk-brand__text { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
 .sk-brand__name { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.2; white-space: nowrap; }
-.sk-brand__sub { font-family: var(--font-kufi); font-size: 12.5px; line-height: 1.2; color: var(--text-3); }
+.sk-brand__sub { font-family: var(--font-ar-ui); font-weight: 500; font-size: 12.5px; line-height: 1.35; color: var(--text-3); }
+.sk-brand__sub:lang(en) { font-family: var(--font-ui); }
+[dir="rtl"] .sk-brand__name { font-family: var(--font-ar-ui); font-weight: 700; }
 .sk-header__nav { display: flex; align-items: center; gap: 6px; }
 .sk-constellation { display: inline-flex; gap: 3px; }
 .sk-constellation i { width: 7px; height: 7px; border-radius: 50%; }
@@ -274,6 +292,14 @@ h1, h2, h3, h4 { margin: 0; font-weight: 700; line-height: 1.2; }
 .sk-footer__inner p { margin: 0; max-width: 70ch; line-height: 1.6; }
 .sk-footer__home { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; color: var(--text-2); }
 .sk-footer__home:hover { color: var(--text); }
+
+/* ---------- Two languages ----------
+   Mark text as <span class="en">…</span><span class="ar" lang="ar">…</span>;
+   <html data-lang="en|ar"> decides which one shows. */
+[data-lang="ar"] .en { display: none !important; }
+[data-lang="en"] .ar { display: none !important; }
+.sk-lang-btn .ar { font-family: var(--font-ui); }
+.sk-lang-btn .en { font-family: var(--font-ar-ui); font-weight: 600; font-size: 15px; }
 
 /* ---------- Links ---------- */
 .sk-link { color: var(--primary); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: var(--line-2); }

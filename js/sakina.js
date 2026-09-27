@@ -1,7 +1,7 @@
 /* ==================================================================
    Sakīna — shared behaviour for the Islamic Projects
-   · Day / Night theme, remembered across every project
-     (they share one origin, so one choice follows you everywhere)
+   · Day / Night theme and Arabic / English, remembered across every
+     project (they share one origin, so one choice follows you everywhere)
    · Sticky header gets its glass once you scroll
    · Gentle reveal-on-scroll for elements marked .sk-reveal
    Identical in every project.
@@ -9,7 +9,12 @@
 (function () {
   'use strict';
   var KEY = 'sakina-theme';
+  var LANG_KEY = 'sakina-lang';
   var root = document.documentElement;
+
+  function lang() {
+    return root.getAttribute('data-lang') === 'ar' || root.getAttribute('lang') === 'ar' ? 'ar' : 'en';
+  }
 
   function current() {
     return root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
@@ -19,10 +24,11 @@
     var meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute('content', theme === 'dark' ? '#0B1624' : '#F6F4EE');
     var buttons = document.querySelectorAll('[data-sk-theme-toggle]');
+    var ar = lang() === 'ar';
     for (var i = 0; i < buttons.length; i++) {
       var b = buttons[i];
-      var toDay = b.getAttribute('data-label-day') || 'Switch to day theme';
-      var toNight = b.getAttribute('data-label-night') || 'Switch to night theme';
+      var toDay = (ar && b.getAttribute('data-label-day-ar')) || b.getAttribute('data-label-day') || (ar ? 'التبديل إلى الوضع النهاري' : 'Switch to day theme');
+      var toNight = (ar && b.getAttribute('data-label-night-ar')) || b.getAttribute('data-label-night') || (ar ? 'التبديل إلى الوضع الليلي' : 'Switch to night theme');
       b.setAttribute('aria-label', theme === 'dark' ? toDay : toNight);
       b.setAttribute('title', theme === 'dark' ? toDay : toNight);
     }
@@ -41,10 +47,36 @@
     return next;
   }
 
+  /* Language: pages mark text as <span class="en">…</span><span class="ar">…</span>
+     and CSS shows the one that matches <html data-lang>. */
+  function setLang(next) {
+    next = next === 'ar' ? 'ar' : 'en';
+    root.setAttribute('data-lang', next);
+    root.setAttribute('lang', next);
+    root.setAttribute('dir', next === 'ar' ? 'rtl' : 'ltr');
+    try { localStorage.setItem(LANG_KEY, next); } catch (e) { /* private mode */ }
+    try {
+      var url = new URL(location.href);
+      if (url.searchParams.has('lang')) { url.searchParams.set('lang', next); history.replaceState(null, '', url); }
+    } catch (e) { /* file:// or old browser */ }
+    sync(current());
+    try { document.dispatchEvent(new CustomEvent('sakina:lang', { detail: next })); } catch (e) { /* old browser */ }
+    return next;
+  }
+
+  function t(pair) {
+    if (!pair) return '';
+    return lang() === 'ar' ? (pair.ar != null ? pair.ar : pair.en) : pair.en;
+  }
+
   function onReady() {
     sync(current());
     var buttons = document.querySelectorAll('[data-sk-theme-toggle]');
     for (var i = 0; i < buttons.length; i++) buttons[i].addEventListener('click', toggle);
+    var langButtons = document.querySelectorAll('[data-sk-lang-toggle]');
+    for (var k = 0; k < langButtons.length; k++) {
+      langButtons[k].addEventListener('click', function () { setLang(lang() === 'ar' ? 'en' : 'ar'); });
+    }
 
     var header = document.querySelector('.sk-header');
     if (header) {
@@ -105,7 +137,7 @@
     document.body.removeChild(ta);
   }
 
-  window.Sakina = { toggle: toggle, apply: apply, current: current, reveal: reveal, toast: toast, copy: copy };
+  window.Sakina = { toggle: toggle, apply: apply, current: current, lang: lang, setLang: setLang, t: t, reveal: reveal, toast: toast, copy: copy };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', onReady);
   else onReady();

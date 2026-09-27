@@ -1,35 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="ltr" data-lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Mawaqit Adhan — a small Windows tray app that calls the adhan using your own masjid's Mawaqit timetable. No account, no installer, no admin rights.">
 <meta name="theme-color" content="#F6F4EE">
-<title>Mawaqit Adhan</title>
-<script>(function(){var t;try{t=localStorage.getItem('sakina-theme')}catch(e){}if(t!=='light'&&t!=='dark'){t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t)})();</script>
+<title>Mawaqit Adhan · أذان مواقيت</title>
+<script>(function(){var d=document.documentElement,t,l;try{t=localStorage.getItem('sakina-theme');l=localStorage.getItem('sakina-lang')}catch(e){}if(t!=='light'&&t!=='dark'){t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}var q=/[?&]lang=(ar|en)/.exec(location.search);if(q)l=q[1];if(l!=='ar'&&l!=='en'){l=(navigator.language||'').slice(0,2)==='ar'?'ar':'en'}d.setAttribute('data-theme',t);d.setAttribute('data-lang',l);d.lang=l;d.dir=l==='ar'?'rtl':'ltr'})();</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23B54A30' d='M23 12L19.78 15.22L19.78 19.78L15.22 19.78L12 23L8.78 19.78L4.22 19.78L4.22 15.22L1 12L4.22 8.78L4.22 4.22L8.78 4.22L12 1L15.22 4.22L19.78 4.22L19.78 8.78Z'/%3E%3Ccircle cx='12' cy='12' r='4.4' fill='%23F6F4EE'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Instrument+Serif:ital@0;1&family=Reem+Kufi:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/sakina.css">
-<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/sakina.css?v=sk2">
+<link rel="stylesheet" href="css/style.css?v=sk2">
 </head>
 <body class="sk-project-adhan">
-<a class="sk-skip" href="#main">Skip to content</a>
+<a class="sk-skip" href="#main"><span class="en">Skip to content</span><span class="ar">تخطَّ إلى المحتوى</span></a>
 <div class="sk-pattern" aria-hidden="true"></div>
 
 <header class="sk-header">
   <div class="sk-container sk-header__inner">
     <a class="sk-brand" href="./">
       <span class="sk-tile sk-tile--sm"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 21h19"/><path d="M4 21v-6.5h11V21"/><path d="M4.5 14.5a5 5 0 0 1 10 0"/><path d="M9.5 9.5v-2"/><path d="M18 21V10M21 21V10"/><path d="M17.3 10h4.4"/><path d="m18 10 1.5-4.5L21 10"/></svg></span>
-      <span class="sk-brand__text"><span class="sk-brand__name">Mawaqit Adhan</span><span class="sk-brand__sub" lang="ar">مواقيت الأذان</span></span>
+      <span class="sk-brand__text"><span class="sk-brand__name"><span class="en">Mawaqit Adhan</span><span class="ar">أذان مواقيت</span></span><span class="sk-brand__sub"><span class="en" lang="ar">أذان مواقيت</span><span class="ar" lang="en">Mawaqit Adhan</span></span></span>
     </a>
     <nav class="sk-header__nav" aria-label="Site">
-      <a class="sk-btn sk-btn--ghost sk-btn--sm sk-hide-sm" href="#features">Features</a>
-      <a class="sk-btn sk-btn--ghost sk-btn--sm sk-hide-sm" href="#requirements">Requirements</a>
-      <a class="sk-btn sk-btn--ghost sk-btn--sm sk-hide-sm" href="https://github.com/HusseinBenz/mawaqit-adhan/releases">Releases</a>
+      <a class="sk-btn sk-btn--ghost sk-btn--sm sk-hide-sm" href="#features"><span class="en">Features</span><span class="ar">المزايا</span></a>
+      <a class="sk-btn sk-btn--ghost sk-btn--sm sk-hide-sm" href="#requirements"><span class="en">Requirements</span><span class="ar">المتطلبات</span></a>
+      <a class="sk-btn sk-btn--ghost sk-btn--sm sk-hide-sm" href="https://github.com/HusseinBenz/mawaqit-adhan/releases"><span class="en">Releases</span><span class="ar">الإصدارات</span></a>
       <a class="sk-btn sk-btn--line sk-btn--sm sk-projects" href="https://husseinbenz.github.io/islamic-projects/" aria-label="All Islamic projects">
-        <span class="sk-constellation" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="sk-hide-sm">All projects</span></a>
+        <span class="sk-constellation" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="sk-hide-sm"><span class="en">All projects</span><span class="ar">كل المشاريع</span></span></a>
+      <button class="sk-btn sk-btn--ghost sk-btn--sm sk-lang-btn" type="button" data-sk-lang-toggle><span class="en" lang="ar">العربية</span><span class="ar" lang="en">English</span></button>
       <button class="sk-icon-btn sk-theme-btn" type="button" data-sk-theme-toggle aria-label="Switch to night theme">
         <svg class="sk-i-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
         <svg class="sk-i-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
@@ -41,17 +42,17 @@
 <main id="main">
   <section class="sk-container hero">
     <div class="hero__text">
-      <span class="sk-tag sk-tag--accent hero__badge sk-rise">Windows tray app · v1.0.0-beta.1</span>
-      <h1 class="sk-display hero__title sk-rise sk-d1">The adhan, called on time, from <em>your own masjid</em></h1>
-      <p class="sk-lede hero__lede sk-rise sk-d2">Mawaqit Adhan sits quietly in your Windows tray and plays the call to prayer using a masjid's own published Mawaqit timetable — five daily prayers, time-zone and DST aware, no account and no server required.</p>
+      <span class="sk-tag sk-tag--accent hero__badge sk-rise"><span class="en">Windows tray app · v1.0.0-beta.1</span><span class="ar">تطبيق لويندوز في شريط المهام · الإصدار <bdi dir="ltr">1.0.0-beta.1</bdi></span></span>
+      <h1 class="sk-display hero__title sk-rise sk-d1"><span class="en">The adhan, called on time, from <em>your own masjid</em></span><span class="ar">الأذان في وقته، <em>من مسجدك أنت</em></span></h1>
+      <p class="sk-lede hero__lede sk-rise sk-d2"><span class="en">Mawaqit Adhan sits quietly in your Windows tray and plays the call to prayer using a masjid's own published Mawaqit timetable — five daily prayers, time-zone and DST aware, no account and no server required.</span><span class="ar">يعمل «أذان مواقيت» بهدوء في شريط مهام ويندوز، ويرفع الأذان وفق الجدول الذي ينشره مسجدك على منصة «مواقيت» — الصلوات الخمس، مع مراعاة المنطقة الزمنية والتوقيت الصيفي، دون حساب ولا خادم.</span></p>
       <div class="hero__actions sk-rise sk-d3">
         <a class="sk-btn sk-btn--accent sk-btn--lg" href="https://github.com/HusseinBenz/mawaqit-adhan/releases/download/v1.0.0-beta.1/MawaqitAdhan-1.0.0-beta.1.zip">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>
-          Download v1.0.0-beta.1</a>
-        <a class="sk-btn sk-btn--line sk-btn--lg" href="https://github.com/HusseinBenz/mawaqit-adhan/releases">All releases</a>
+          <span class="en">Download v1.0.0-beta.1</span><span class="ar">تنزيل الإصدار <bdi dir="ltr">1.0.0-beta.1</bdi></span></a>
+        <a class="sk-btn sk-btn--line sk-btn--lg" href="https://github.com/HusseinBenz/mawaqit-adhan/releases"><span class="en">All releases</span><span class="ar">كل الإصدارات</span></a>
       </div>
       <div class="hero__meta sk-rise sk-d4">
-        <span>For Windows · .zip · ~11.4 MB · portable</span>
+        <span><span class="en">For Windows · .zip · ~11.4 MB · portable</span><span class="ar">لويندوز · ملف zip · نحو ١١٫٤ ميغابايت · محمول</span></span>
         <button class="sk-chip checksum" type="button" id="copySha" data-sha="ECBE343558360404F56BE596B9E81DCC50DDCFE2A44D73B82D759270C58F7578" aria-label="Copy the SHA-256 checksum" title="ECBE343558360404F56BE596B9E81DCC50DDCFE2A44D73B82D759270C58F7578">
           SHA-256 ECBE3435…C58F7578
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
@@ -70,63 +71,63 @@
         <div class="tray__head">
           <span class="tray__masjid">
             <span class="sk-tile sk-tile--sm"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
-            <span><strong>Your masjid</strong><small id="trayHijri">Umm al-Qura date</small></span>
+            <span><strong><span class="en">Your masjid</span><span class="ar">مسجدك</span></strong><small id="trayHijri">Umm al-Qura date</small></span>
           </span>
-          <span class="sk-tag">Sample</span>
+          <span class="sk-tag"><span class="en">Sample</span><span class="ar">مثال</span></span>
         </div>
         <div class="tray__next">
-          <span><small>Next</small><b class="sk-display">ʿAṣr</b></span>
-          <span class="tray__when"><b>16:41</b><small>in 1 h 12 min</small></span>
+          <span><small><span class="en">Next</span><span class="ar">التالية</span></small><b class="sk-display"><span class="en">ʿAṣr</span><span class="ar">العصر</span></b></span>
+          <span class="tray__when"><b>16:41</b><small><span class="en">in 1 h 12 min</span><span class="ar">بعد ساعة و١٢ دقيقة</span></small></span>
         </div>
         <ul class="tray__list">
-          <li><span>Fajr</span><span>05:32</span><small>iqama 05:52</small><button class="switch is-on" type="button" aria-pressed="true" aria-label="Adhan for Fajr"></button></li>
-          <li><span>Dhuhr</span><span>13:24</span><small>iqama 13:40</small><button class="switch is-on" type="button" aria-pressed="true" aria-label="Adhan for Dhuhr"></button></li>
-          <li class="is-next"><span>ʿAṣr</span><span>16:41</span><small>iqama 16:55</small><button class="switch is-on" type="button" aria-pressed="true" aria-label="Adhan for ʿAṣr"></button></li>
-          <li><span>Maghrib</span><span>19:14</span><small>iqama 19:20</small><button class="switch is-on" type="button" aria-pressed="true" aria-label="Adhan for Maghrib"></button></li>
-          <li><span>ʿIshāʾ</span><span>20:48</span><small>iqama 21:05</small><button class="switch is-on" type="button" aria-pressed="true" aria-label="Adhan for ʿIshāʾ"></button></li>
+          <li><span><span class="en">Fajr</span><span class="ar">الفجر</span></span><span>05:32</span><small><span class="en">iqama</span><span class="ar">الإقامة</span> 05:52</small><button class="switch is-on" type="button" aria-pressed="true" aria-label="Adhan for Fajr"></button></li>
+          <li><span><span class="en">Dhuhr</span><span class="ar">الظهر</span></span><span>13:24</span><small><span class="en">iqama</span><span class="ar">الإقامة</span> 13:40</small><button class="switch is-on" type="button" aria-pressed="true" aria-label="Adhan for Dhuhr"></button></li>
+          <li class="is-next"><span><span class="en">ʿAṣr</span><span class="ar">العصر</span></span><span>16:41</span><small><span class="en">iqama</span><span class="ar">الإقامة</span> 16:55</small><button class="switch is-on" type="button" aria-pressed="true" aria-label="Adhan for ʿAṣr"></button></li>
+          <li><span><span class="en">Maghrib</span><span class="ar">المغرب</span></span><span>19:14</span><small><span class="en">iqama</span><span class="ar">الإقامة</span> 19:20</small><button class="switch is-on" type="button" aria-pressed="true" aria-label="Adhan for Maghrib"></button></li>
+          <li><span><span class="en">ʿIshāʾ</span><span class="ar">العشاء</span></span><span>20:48</span><small><span class="en">iqama</span><span class="ar">الإقامة</span> 21:05</small><button class="switch is-on" type="button" aria-pressed="true" aria-label="Adhan for ʿIshāʾ"></button></li>
         </ul>
       </div>
 
       <div class="toast-card sk-glass sk-float" aria-hidden="true">
         <span class="bars"><i></i><i></i><i></i><i></i></span>
-        <span><strong>It's time for ʿAṣr</strong><small>Other audio lowered · restores afterward</small></span>
+        <span><strong><span class="en">It's time for ʿAṣr</span><span class="ar">حان وقت صلاة العصر</span></strong><small><span class="en">Other audio lowered · restores afterward</span><span class="ar">خُفض صوت التطبيقات الأخرى، ويعود بعد الأذان</span></small></span>
       </div>
     </div>
   </section>
 
   <section class="sk-container features" id="features" aria-labelledby="featuresTitle">
-    <span class="sk-eyebrow">What it does</span>
-    <h2 class="sk-display section-title" id="featuresTitle">Small, quiet, <em>and punctual</em></h2>
+    <span class="sk-eyebrow"><span class="en">What it does</span><span class="ar">ما الذي يفعله</span></span>
+    <h2 class="sk-display section-title" id="featuresTitle"><span class="en">Small, quiet, <em>and punctual</em></span><span class="ar">صغير، هادئ، <em>ودقيق في مواعيده</em></span></h2>
     <div class="features__grid">
       <article class="feature sk-card sk-lift sk-reveal">
         <span class="sk-tile sk-tile--md"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
-        <h3>Any Mawaqit masjid</h3>
-        <p>Search by name or city, or paste a Mawaqit link. The full-year timetable is cached for offline use and refreshed automatically.</p>
+        <h3><span class="en">Any Mawaqit masjid</span><span class="ar">أي مسجد على «مواقيت»</span></h3>
+        <p><span class="en">Search by name or city, or paste a Mawaqit link. The full-year timetable is cached for offline use and refreshed automatically.</span><span class="ar">ابحث بالاسم أو المدينة، أو الصق رابط المسجد على «مواقيت». يُحفظ جدول السنة كاملة للعمل دون اتصال، ويُحدَّث تلقائيًا.</span></p>
       </article>
       <article class="feature sk-card sk-lift sk-reveal">
         <span class="sk-tile sk-tile--md"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
-        <h3>Five bundled adhans</h3>
-        <p>Five recordings included, with a separate Fajr voice/volume, per-prayer switches, and support for additional or imported recordings.</p>
+        <h3><span class="en">Five bundled adhans</span><span class="ar">خمسة أذانات مرفقة</span></h3>
+        <p><span class="en">Five recordings included, with a separate Fajr voice/volume, per-prayer switches, and support for additional or imported recordings.</span><span class="ar">خمسة تسجيلات مضمّنة، مع صوت ومستوى منفصلين للفجر، ومفتاح لكل صلاة، وإمكانية إضافة تسجيلات أخرى أو استيرادها.</span></p>
       </article>
       <article class="feature sk-card sk-lift sk-reveal">
         <span class="sk-tile sk-tile--md"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
-        <h3>Correct times, everywhere</h3>
-        <p>Time-zone and daylight-saving handling, including half-hour DST transitions, mapped from the masjid's own IANA zone.</p>
+        <h3><span class="en">Correct times, everywhere</span><span class="ar">أوقات صحيحة في كل مكان</span></h3>
+        <p><span class="en">Time-zone and daylight-saving handling, including half-hour DST transitions, mapped from the masjid's own IANA zone.</span><span class="ar">يراعي المنطقة الزمنية والتوقيت الصيفي، حتى تغييرات نصف الساعة، وفق المنطقة الزمنية الخاصة بالمسجد.</span></p>
       </article>
       <article class="feature sk-card sk-lift sk-reveal">
         <span class="sk-tile sk-tile--md"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
-        <h3>Iqama &amp; Jumuʿah</h3>
-        <p>Iqama offsets or fixed times, Hijri adjustment, and a separate Friday Jumuʿah display alongside the regular Dhuhr call.</p>
+        <h3><span class="en">Iqama &amp; Jumuʿah</span><span class="ar">الإقامة والجمعة</span></h3>
+        <p><span class="en">Iqama offsets or fixed times, Hijri adjustment, and a separate Friday Jumuʿah display alongside the regular Dhuhr call.</span><span class="ar">إزاحات للإقامة أو أوقات ثابتة، وتعديل للتاريخ الهجري، وعرض منفصل لصلاة الجمعة إلى جانب أذان الظهر المعتاد.</span></p>
       </article>
       <article class="feature sk-card sk-lift sk-reveal">
         <span class="sk-tile sk-tile--md"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg></span>
-        <h3>Plays well with other audio</h3>
-        <p>Fades other apps' volume down for the adhan and restores it afterward, with a media play/pause signal in between.</p>
+        <h3><span class="en">Plays well with other audio</span><span class="ar">يتعايش مع الأصوات الأخرى</span></h3>
+        <p><span class="en">Fades other apps' volume down for the adhan and restores it afterward, with a media play/pause signal in between.</span><span class="ar">يخفض صوت التطبيقات الأخرى أثناء الأذان ثم يعيده، مع إشارة إيقاف مؤقت وتشغيل للوسائط بينهما.</span></p>
       </article>
       <article class="feature sk-card sk-lift sk-reveal">
         <span class="sk-tile sk-tile--md"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.7 9a1 1 0 0 1-.6 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.2-2.7a1.2 1.2 0 0 1 1.6 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1Z"/></svg></span>
-        <h3>No installer, no telemetry</h3>
-        <p>Portable executable, no admin rights, no third-party runtime beyond .NET Framework 4.8 (already on Windows 10/11), and nothing phoned home.</p>
+        <h3><span class="en">No installer, no telemetry</span><span class="ar">دون تثبيت ولا تتبّع</span></h3>
+        <p><span class="en">Portable executable, no admin rights, no third-party runtime beyond .NET Framework 4.8 (already on Windows 10/11), and nothing phoned home.</span><span class="ar">ملف تنفيذي محمول، دون صلاحيات مسؤول، ولا يحتاج إلا <bdi dir="ltr">.NET Framework 4.8</bdi> (الموجود أصلًا في ويندوز 10 و11)، ولا يرسل أي بيانات.</span></p>
       </article>
     </div>
   </section>
@@ -134,13 +135,13 @@
   <section class="sk-container" id="requirements" aria-labelledby="reqTitle">
     <div class="requirements sk-card sk-reveal">
       <div>
-        <span class="sk-eyebrow">Before you download</span>
-        <h2 class="sk-display section-title" id="reqTitle">Requirements</h2>
+        <span class="sk-eyebrow"><span class="en">Before you download</span><span class="ar">قبل التنزيل</span></span>
+        <h2 class="sk-display section-title" id="reqTitle"><span class="en">Requirements</span><span class="ar">المتطلبات</span></h2>
       </div>
       <ul class="requirements__list">
-        <li>Windows 7 SP1, 8.1, 10 (1607+) or 11, with .NET Framework 4.8 or later.</li>
-        <li>The app must be running and the PC awake to call prayers on time.</li>
-        <li>Internet access to look up a masjid and refresh its timetable; a cached calendar keeps working offline afterward.</li>
+        <li><span class="en">Windows 7 SP1, 8.1, 10 (1607+) or 11, with .NET Framework 4.8 or later.</span><span class="ar">ويندوز 7 SP1 أو 8.1 أو 10 (الإصدار 1607 فما بعده) أو 11، مع <bdi dir="ltr">.NET Framework 4.8</bdi> أو أحدث.</span></li>
+        <li><span class="en">The app must be running and the PC awake to call prayers on time.</span><span class="ar">يجب أن يكون التطبيق مفتوحًا والحاسوب مستيقظًا ليُرفع الأذان في وقته.</span></li>
+        <li><span class="en">Internet access to look up a masjid and refresh its timetable; a cached calendar keeps working offline afterward.</span><span class="ar">يلزم اتصال بالإنترنت للبحث عن المسجد وتحديث جدوله، ثم يعمل الجدول المحفوظ دون اتصال.</span></li>
       </ul>
     </div>
   </section>
@@ -148,19 +149,19 @@
 
 <footer class="sk-footer">
   <div class="sk-container sk-footer__inner">
-    <p>Free · portable · no telemetry. Source and releases on <a class="sk-link" href="https://github.com/HusseinBenz/mawaqit-adhan">GitHub</a>.</p>
+    <p><span class="en">Free · portable · no telemetry. Source and releases on <a class="sk-link" href="https://github.com/HusseinBenz/mawaqit-adhan">GitHub</a>.</span><span class="ar">مجاني · محمول · دون تتبّع. المصدر والإصدارات على <a class="sk-link" href="https://github.com/HusseinBenz/mawaqit-adhan" lang="en">GitHub</a>.</span></p>
     <a class="sk-footer__home" href="https://husseinbenz.github.io/islamic-projects/">
       <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path style="fill:var(--primary)" d="M23 12L19.78 15.22L19.78 19.78L15.22 19.78L12 23L8.78 19.78L4.22 19.78L4.22 15.22L1 12L4.22 8.78L4.22 4.22L8.78 4.22L12 1L15.22 4.22L19.78 4.22L19.78 8.78Z"/><circle cx="12" cy="12" r="4.4" style="fill:var(--bg)"/></svg>
-      Part of Islamic Projects</a>
+      <span class="en">Part of Islamic Projects</span><span class="ar">من المشاريع الإسلامية</span></a>
   </div>
 </footer>
 
-<script src="js/sakina.js"></script>
+<script src="js/sakina.js?v=sk2"></script>
 <script>
 (function () {
   var sha = document.getElementById('copySha');
   sha.addEventListener('click', function () {
-    Sakina.copy(sha.getAttribute('data-sha')).then(function () { Sakina.toast('Checksum copied'); });
+    Sakina.copy(sha.getAttribute('data-sha')).then(function () { Sakina.toast(Sakina.lang() === 'ar' ? 'نُسخ رمز التحقق' : 'Checksum copied'); });
   });
   Array.prototype.forEach.call(document.querySelectorAll('.tray .switch'), function (b) {
     b.addEventListener('click', function () {
@@ -170,11 +171,21 @@
     });
   });
   try {
-    var MONTHS = ['Muḥarram', 'Ṣafar', 'Rabīʿ al-Awwal', 'Rabīʿ al-Thānī', 'Jumādā al-Ūlā', 'Jumādā al-Ākhirah', 'Rajab', 'Shaʿbān', 'Ramaḍān', 'Shawwāl', 'Dhū al-Qaʿdah', 'Dhū al-Ḥijjah'];
+    var MONTHS = {
+      en: ['Muḥarram', 'Ṣafar', 'Rabīʿ al-Awwal', 'Rabīʿ al-Thānī', 'Jumādā al-Ūlā', 'Jumādā al-Ākhirah', 'Rajab', 'Shaʿbān', 'Ramaḍān', 'Shawwāl', 'Dhū al-Qaʿdah', 'Dhū al-Ḥijjah'],
+      ar: ['محرّم', 'صفر', 'ربيع الأول', 'ربيع الآخر', 'جمادى الأولى', 'جمادى الآخرة', 'رجب', 'شعبان', 'رمضان', 'شوّال', 'ذو القعدة', 'ذو الحجة']
+    };
     var p = {};
     new Intl.DateTimeFormat('en-u-ca-islamic-umalqura', { day: 'numeric', month: 'numeric', year: 'numeric' })
       .formatToParts(new Date()).forEach(function (x) { p[x.type] = parseInt(x.value, 10); });
-    if (p.year > 1000) document.getElementById('trayHijri').textContent = p.day + ' ' + MONTHS[p.month - 1] + ' ' + p.year;
+    var showHijri = function () {
+      if (!(p.year > 1000)) return;
+      var ar = Sakina.lang() === 'ar';
+      var digits = function (v) { return ar ? String(v).replace(/[0-9]/g, function (d) { return '٠١٢٣٤٥٦٧٨٩'[d]; }) : String(v); };
+      document.getElementById('trayHijri').textContent = digits(p.day) + ' ' + MONTHS[ar ? 'ar' : 'en'][p.month - 1] + ' ' + digits(p.year);
+    };
+    showHijri();
+    document.addEventListener('sakina:lang', showHijri);
   } catch (e) { /* keep the placeholder */ }
 })();
 </script>
