@@ -299,6 +299,11 @@ h1, h2, h3, h4 { margin: 0; font-weight: 700; line-height: 1.2; }
 [data-lang="ar"] .en { display: none !important; }
 [data-lang="en"] .ar { display: none !important; }
 .sk-lang-btn .ar { font-family: var(--font-ui); }
+.sk-digits-btn { font-variant-numeric: tabular-nums; letter-spacing: 0; }
+.sk-digits-btn .d-arab { font-family: var(--font-ar-ui); }
+.sk-digits-btn .d-latn, [data-digits="arab"] .sk-digits-btn .d-arab { display: none; }
+[data-digits="arab"] .sk-digits-btn .d-latn { display: inline; }
+[data-lang="en"] .sk-digits-btn { display: none; }
 .sk-lang-btn .en { font-family: var(--font-ar-ui); font-weight: 600; font-size: 15px; }
 
 /* ---------- Links ---------- */

@@ -11,8 +11,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/sakina.css?v=sk2">
-<link rel="stylesheet" href="css/style.css?v=sk2">
+<link rel="stylesheet" href="css/sakina.css?v=sk3">
+<link rel="stylesheet" href="css/style.css?v=sk3">
 </head>
 <body class="sk-project-adhan">
 <a class="sk-skip" href="#main"><span class="en">Skip to content</span><span class="ar">تخطَّ إلى المحتوى</span></a>
@@ -53,7 +53,7 @@
       </div>
       <div class="hero__meta sk-rise sk-d4">
         <span><span class="en">For Windows · .zip · ~11.4 MB · portable</span><span class="ar">لويندوز · ملف zip · نحو ١١٫٤ ميغابايت · محمول</span></span>
-        <button class="sk-chip checksum" type="button" id="copySha" data-sha="ECBE343558360404F56BE596B9E81DCC50DDCFE2A44D73B82D759270C58F7578" aria-label="Copy the SHA-256 checksum" title="ECBE343558360404F56BE596B9E81DCC50DDCFE2A44D73B82D759270C58F7578">
+        <button class="sk-chip checksum" type="button" id="copySha" lang="en" data-sha="ECBE343558360404F56BE596B9E81DCC50DDCFE2A44D73B82D759270C58F7578" aria-label="Copy the SHA-256 checksum" title="ECBE343558360404F56BE596B9E81DCC50DDCFE2A44D73B82D759270C58F7578">
           SHA-256 ECBE3435…C58F7578
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         </button>
@@ -156,7 +156,7 @@
   </div>
 </footer>
 
-<script src="js/sakina.js?v=sk2"></script>
+<script src="js/sakina.js?v=sk3"></script>
 <script>
 (function () {
   var sha = document.getElementById('copySha');
@@ -181,7 +181,7 @@
     var showHijri = function () {
       if (!(p.year > 1000)) return;
       var ar = Sakina.lang() === 'ar';
-      var digits = function (v) { return ar ? String(v).replace(/[0-9]/g, function (d) { return '٠١٢٣٤٥٦٧٨٩'[d]; }) : String(v); };
+      var digits = function (v) { return Sakina.num(v); };
       document.getElementById('trayHijri').textContent = digits(p.day) + ' ' + MONTHS[ar ? 'ar' : 'en'][p.month - 1] + ' ' + digits(p.year);
     };
     showHijri();
