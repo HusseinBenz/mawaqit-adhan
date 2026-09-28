@@ -6,14 +6,14 @@ third-party runtime packages, web browser engine, or bundled .NET runtime is req
 
 ## Install or upgrade
 
-Download `MawaqitAdhan-1.0.0-beta.2-Setup.exe` from [GitHub Releases](https://github.com/HusseinBenz/mawaqit-adhan/releases). The installer detects an existing installed or portable copy through its registration, startup entry, running process, or known folders. Confirm the detected folder, or browse to another portable copy. Settings, cache, downloaded voices, and startup preference are preserved. The app is closed gracefully before files are replaced, with rollback on failure.
+Download `MawaqitAdhan-1.0.0-beta.3-Setup.exe` from [GitHub Releases](https://github.com/HusseinBenz/mawaqit-adhan/releases). The standard Inno Setup wizard detects an existing installed or portable copy through its registration, startup entry, running process, or known folders. Confirm the detected folder, or browse to another portable copy. Settings, cache, downloaded voices, and startup preference are preserved. The app is closed gracefully before files are replaced, using Windows Restart Manager.
 
-Installations appear in Windows Installed Apps for removal; uninstall keeps user data. Setup requires .NET Framework 4.8 and a writable per-user folder. For unattended installation: `Setup.exe --silent --dir "C:\path\MawaqitAdhan"` (does not launch the app).
+Installations appear in Windows Installed Apps for removal; uninstall keeps user data. Setup requires .NET Framework 4.8 and a writable per-user folder. For unattended installation: `Setup.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /DIR="C:\path\MawaqitAdhan"` (does not launch the app).
 
 ## Portable version
 
-Extract `dist/MawaqitAdhan-1.0.0-beta.2.zip` and run **MawaqitAdhan.exe**. Keep the `audio`
-folder beside it. An extracted copy is also available in `dist/MawaqitAdhan-1.0.0-beta.2`.
+Extract `dist/MawaqitAdhan-1.0.0-beta.3.zip` and run **MawaqitAdhan.exe**. Keep the `audio`
+folder beside it. An extracted copy is also available in `dist/MawaqitAdhan-1.0.0-beta.3`.
 On first launch, search for a masjid by name/city or paste its Mawaqit link, then
 choose **Use this**. **Test adhan** plays the selected recording; **Stop** stops it.
 Close normally hides the app in the tray. Use the tray menu's **Exit** to quit.
@@ -82,7 +82,7 @@ system mute; its own volume setting is multiplied by the system volume.
 Build on Windows with a modern .NET SDK and the **.NET Framework 4.8 Developer
 Pack/targeting pack**. The developer pack is only needed to build, not to run.
 The Windows SDK 10.0.26100.0 is also needed to build the media controls (override
-`WindowsMediaSdkVersion` for another installed SDK). There are no NuGet package dependencies.
+`WindowsMediaSdkVersion` for another installed SDK). There are no NuGet package dependencies. Install Inno Setup 6 to build the standard installer (or pass `-IsccPath` to the packaging script).
 
 ```powershell
 dotnet build src/MawaqitAdhan/MawaqitAdhan.csproj -c Release

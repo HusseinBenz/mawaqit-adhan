@@ -1,36 +1,28 @@
-# Mawaqit Adhan 1.0.0-beta.2
+# Mawaqit Adhan 1.0.0-beta.3
 
 Released 2026-09-28.
 
 ## Changelog
 
-- Fixed the global play/pause bug that could start an already-paused player (for example MPC-HC) while pausing YouTube in Brave for the adhan.
-- Pause only Windows media sessions that report Playing. Resume only sessions successfully paused by the app and still paused afterward. Already-paused, stopped, and manually resumed players are left alone.
-- Removed the global media-key fallback. Unsupported players are left untouched instead of risking starting other media.
-- Added a standalone per-user Windows installer, existing-installation detection, in-place upgrades, graceful app shutdown, rollback on installation errors, a Start menu shortcut, and a Windows Installed Apps uninstall entry.
-- Preserve settings, cached timetables, imported/downloaded voices, custom files, and the user's enabled/disabled startup preference during upgrades. Uninstall keeps user data.
-- Added multi-player and installer regression coverage; excluded sync-conflict source copies from builds.
+- Replaced the custom setup program with **Inno Setup 6**, using its standard Windows installation wizard and uninstaller.
+- Supports fresh installation, repeat upgrades, and migration from the beta 2 custom installer. Upgrading beta 2 replaces its obsolete uninstall registration and helper files.
+- Detects registered installations, the current user's startup entry, and running portable copies. The destination page also lets you select a different existing copy.
+- Preserves settings, cached timetables, downloaded/imported voices, custom files, and the enabled/disabled Windows startup preference.
+- Uses Windows Restart Manager to close applications during upgrades. Uninstall keeps user data.
+- Keeps beta 2's media fix: pause only playing media sessions, then resume only sessions the app paused. Already-paused players remain paused.
 
 ## Downloads
 
-- **MawaqitAdhan-1.0.0-beta.2-Setup.exe** — recommended installation and upgrade program.
-- **MawaqitAdhan-1.0.0-beta.2.zip** — portable version; extract and run MawaqitAdhan.exe with its audio folder beside it.
-- **SHA256SUMS.txt** — SHA-256 checksums for both downloads.
+- **MawaqitAdhan-1.0.0-beta.3-Setup.exe** — standard Inno Setup installer; recommended for installation and upgrades.
+- **MawaqitAdhan-1.0.0-beta.3.zip** — portable version.
+- **SHA256SUMS.txt** — SHA-256 checksums for both packages.
 
-## Upgrade behavior
+Run Setup, review the detected destination, and follow the standard wizard. No administrator rights are required for a writable per-user location. If a portable copy cannot be detected, select its folder on the destination page. Other copies elsewhere on the PC are not deleted.
 
-Run Setup.exe. It first detects an installation registered by this installer, then an existing portable copy through the current user's Windows startup entry, a running app, or known install locations. The detected folder is shown before updating. Use Browse for a portable copy in another location. It does not scan every disk or delete other copies.
+## Requirements and verification
 
-The installer closes the running app through Windows Restart Manager before replacing files. If Windows cannot close it gracefully, exit it through the tray menu and retry. Files are backed up during installation and restored if installation fails. Startup is redirected to the selected installation only when it was already enabled.
-
-No administrator rights are needed for a writable per-user folder. .NET Framework 4.8 or later must already be installed. Settings and voices remain in `%APPDATA%\MawaqitAdhan`.
-
-## Verification and limitations
-
-- Release app and installer built with no warnings/errors.
-- 43 application regression checks passed on each of x64 and x86 Windows 11, including native media-session enumeration.
-- Installer checks cover clean install, repeat install, legacy portable upgrade, startup preservation, copy/registration failure rollback, safe extraction, uninstall, and graceful shutdown of the previous tray app.
-- Media session control requires Windows 10 version 1809 or later and a player that exposes Windows media controls. The mixed-player regression uses simulated sessions; a live Brave/MPC-HC combination has not been verified.
-- Older Windows and ARM hardware have not been tested directly. The app and installer are not Authenticode-signed.
-
-Desktop app source is on the `desktop-app` branch. The default branch remains the download website.
+- .NET Framework 4.8 or later is required; Setup checks this before installing.
+- App and Inno Setup packages build successfully. Isolated installer integration checks cover fresh install, repeat upgrade, migration from the custom installer, portable discovery, startup preservation, and uninstall without removing custom files.
+- The beta 2 app regression suite passed on x64 and x86 Windows 11. Playback behavior is unchanged in beta 3.
+- Windows media control requires Windows 10 version 1809 or later and a supported media player. Older Windows/ARM devices and a live mixed Brave/MPC-HC playback scenario have not been verified.
+- The release is unsigned. Desktop source and installer scripts are on the `desktop-app` branch; the default branch hosts the website.

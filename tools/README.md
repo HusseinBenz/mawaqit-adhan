@@ -60,14 +60,19 @@ cancel/reopen; city search; settings/scrolling and Fajr preview; close/minimise 
 tray; relaunch and single-instance activation; Windows startup; notifications;
 real media-player pause/resume; and playback-device changes during a fade.
 
-## InstallerCheck
+## Standard Inno Setup installer
 
-Build the packages first with tools/package.ps1, then run:
+Install Inno Setup 6, then run `powershell -NoProfile -File tools/package.ps1`.
+The script uses `tools/installer.iss` to build the standard Windows setup wizard.
+Pass `-IsccPath` if the compiler is installed in a nonstandard location.
 
-```powershell
-dotnet run --project tools/InstallerCheck/InstallerCheck.csproj -c Release -- dist/MawaqitAdhan-1.0.0-beta.2.zip dist/MawaqitAdhan-1.0.0-beta.2-Setup.exe dist/MawaqitAdhan-1.0.0-beta.1/MawaqitAdhan.exe
-```
+Run `powershell -NoProfile -File tools/test-installer.ps1` after packaging.
+This compiles the same Inno script with an isolated application ID and startup
+value. Tests cover clean installation, repeat upgrade, beta 2 custom-installer
+migration, portable startup-path detection, settings/custom-file preservation,
+and standard uninstallation. The user's normal registration is never modified.
+If the normal app is not running, a previous executable is launched with isolated
+data to exercise Restart Manager. Otherwise that process test is skipped.
 
-Checks use a unique temporary directory, an isolated HKCU registry subtree, and an isolated shortcut; the user's installation and startup registration are not changed. Add `--running-app` only when the normal app is not running, to launch the previous executable with isolated settings and verify graceful Restart Manager shutdown. Test artifacts are retained at the printed temporary path.
-
-The standalone installer is built by tools/Setup/Setup.csproj with the portable ZIP embedded. It uses the installed .NET build tools; no third-party installer compiler is required.
+Integration logs and test files are kept under `artifacts/inno-test`.
+The old custom installer and its test harness were removed; history retains them.
