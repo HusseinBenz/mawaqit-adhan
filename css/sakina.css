@@ -37,6 +37,7 @@
   --jinn: #7048C8; --jinn-soft: #ECE5FB;
   --adhan: #B54A30; --adhan-soft: #F8E3DB;
   --fiqh: #5B7A1E; --fiqh-soft: #E9F0D6;
+  --index: #9A3B78; --index-soft: #F5E2EE;
   --on-accent: #FFFFFF;
   --moon-lit: #D9A441; --moon-dark: #E6E0D2;
   --pattern-alpha: .07;
@@ -61,6 +62,7 @@
   --jinn: #BDA6FF; --jinn-soft: rgba(189, 166, 255, .14);
   --adhan: #F5A487; --adhan-soft: rgba(245, 164, 135, .14);
   --fiqh: #B9D46E; --fiqh-soft: rgba(185, 212, 110, .14);
+  --index: #EFA3D3; --index-soft: rgba(239, 163, 211, .14);
   --on-accent: #0B1624;
   --moon-lit: #F3E6BD; --moon-dark: rgba(163, 190, 220, .16);
   --pattern-alpha: .06;
@@ -80,6 +82,7 @@
 .sk-project-jinn   { --accent: var(--jinn);    --accent-soft: var(--jinn-soft); }
 .sk-project-adhan  { --accent: var(--adhan);   --accent-soft: var(--adhan-soft); }
 .sk-project-fiqh   { --accent: var(--fiqh);    --accent-soft: var(--fiqh-soft); }
+.sk-project-index  { --accent: var(--index);   --accent-soft: var(--index-soft); }
 
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
@@ -278,12 +281,14 @@ h1, h2, h3, h4 { margin: 0; font-weight: 700; line-height: 1.2; }
 .sk-constellation i:nth-child(4) { background: var(--jinn); }
 .sk-constellation i:nth-child(5) { background: var(--adhan); }
 .sk-constellation i:nth-child(6) { background: var(--fiqh); }
+.sk-constellation i:nth-child(7) { background: var(--index); }
 .sk-projects:hover .sk-constellation i { animation: sk-hop .5s var(--spring); }
 .sk-projects:hover .sk-constellation i:nth-child(2) { animation-delay: .05s; }
 .sk-projects:hover .sk-constellation i:nth-child(3) { animation-delay: .1s; }
 .sk-projects:hover .sk-constellation i:nth-child(4) { animation-delay: .15s; }
 .sk-projects:hover .sk-constellation i:nth-child(5) { animation-delay: .2s; }
 .sk-projects:hover .sk-constellation i:nth-child(6) { animation-delay: .25s; }
+.sk-projects:hover .sk-constellation i:nth-child(7) { animation-delay: .3s; }
 @keyframes sk-hop { 50% { transform: translateY(-4px); } }
 
 /* ---------- Shared footer ---------- */
