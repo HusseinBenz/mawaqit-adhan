@@ -5,6 +5,6 @@ that plays the adhan using a masjid's own Mawaqit timetable.
 
 Live: https://husseinbenz.github.io/mawaqit-adhan/
 
-This repository holds only the landing page (`index.html` + `css/`). The
-portable release ZIP and its SHA-256 checksum are attached to this repo's
+The default branch holds the landing page (`index.html`, `css/`, and `js/`). Desktop app and installer source are on the [`desktop-app` branch](https://github.com/HusseinBenz/mawaqit-adhan/tree/desktop-app). The
+setup EXE, portable release ZIP, and their SHA-256 checksums are attached to this repo's
 [GitHub Releases](https://github.com/HusseinBenz/mawaqit-adhan/releases).
