@@ -14,3 +14,5 @@ dist/
 *.log
 Thumbs.db
 .DS_Store
+*.sync-conflict-*
+.sync-conflict-*

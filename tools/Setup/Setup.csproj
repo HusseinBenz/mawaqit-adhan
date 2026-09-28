@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AutomaticallyUseReferenceAssemblyPackages>false</AutomaticallyUseReferenceAssemblyPackages>
+    <AssemblyName>MawaqitAdhan-Setup</AssemblyName>
+    <Product>Mawaqit Adhan Setup</Product>
+    <Version>1.0.0-beta.2</Version>
+    <FileVersion>1.0.0.2</FileVersion>
+    <ApplicationIcon>../../assets/app.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <EmbeddedResource Include="$(PayloadPath)" LogicalName="payload.zip" Condition="'$(PayloadPath)' != ''" />
+  </ItemGroup>
+</Project>

@@ -282,35 +282,3 @@ public static class SystemAudio
         [PreserveSig] int GetPeakValue(out float peak);
     }
 }
-
-/// <summary>Sends the keyboard media keys, so whatever is playing pauses and resumes itself.</summary>
-public static class MediaKeys
-{
-    private const byte VkMediaPlayPause = 0xB3;
-    private const uint KeyEventExtendedKey = 0x0001;
-    private const uint KeyEventKeyUp = 0x0002;
-
-    [DllImport("user32.dll", SetLastError = true)]
-    private static extern void keybd_event(byte key, byte scan, uint flags, UIntPtr extraInfo);
-
-    public static void TogglePlayPause()
-    {
-        try
-        {
-            keybd_event(VkMediaPlayPause, 0, KeyEventExtendedKey, UIntPtr.Zero);
-            keybd_event(VkMediaPlayPause, 0, KeyEventExtendedKey | KeyEventKeyUp, UIntPtr.Zero);
-            Log.Info("Sent media play/pause");
-        }
-        catch (Exception ex)
-        {
-            Log.Warn("Could not send the media key: " + ex.Message);
-        }
-    }
-
-    /// <summary>Only used for diagnostics in the log.</summary>
-    public static string DescribeForeground()
-    {
-        try { return Process.GetCurrentProcess().ProcessName; }
-        catch { return "?"; }
-    }
-}

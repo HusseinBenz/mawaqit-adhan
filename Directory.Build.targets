@@ -1,0 +1,5 @@
+<Project>
+  <ItemGroup>
+    <Compile Remove="**/*.sync-conflict-*;../../src/**/*.sync-conflict-*" />
+  </ItemGroup>
+</Project>

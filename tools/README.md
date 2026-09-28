@@ -59,3 +59,15 @@ Manual release checks still useful on each target Windows version: first-run
 cancel/reopen; city search; settings/scrolling and Fajr preview; close/minimise to
 tray; relaunch and single-instance activation; Windows startup; notifications;
 real media-player pause/resume; and playback-device changes during a fade.
+
+## InstallerCheck
+
+Build the packages first with tools/package.ps1, then run:
+
+```powershell
+dotnet run --project tools/InstallerCheck/InstallerCheck.csproj -c Release -- dist/MawaqitAdhan-1.0.0-beta.2.zip dist/MawaqitAdhan-1.0.0-beta.2-Setup.exe dist/MawaqitAdhan-1.0.0-beta.1/MawaqitAdhan.exe
+```
+
+Checks use a unique temporary directory, an isolated HKCU registry subtree, and an isolated shortcut; the user's installation and startup registration are not changed. Add `--running-app` only when the normal app is not running, to launch the previous executable with isolated settings and verify graceful Restart Manager shutdown. Test artifacts are retained at the printed temporary path.
+
+The standalone installer is built by tools/Setup/Setup.csproj with the portable ZIP embedded. It uses the installed .NET build tools; no third-party installer compiler is required.

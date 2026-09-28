@@ -18,7 +18,8 @@ internal interface IPlaybackEnvironment
     void SetVolume(float value);
     bool IsMuted();
     bool OtherAudioPlaying();
-    void ToggleMedia();
+    Task<bool> PauseMediaAsync();
+    Task ResumeMediaAsync();
 }
 
 internal sealed class WindowsPlaybackEnvironment : IPlaybackEnvironment
@@ -27,7 +28,9 @@ internal sealed class WindowsPlaybackEnvironment : IPlaybackEnvironment
     public void SetVolume(float value) => SystemAudio.SetMasterVolume(value);
     public bool IsMuted() => SystemAudio.IsMuted();
     public bool OtherAudioPlaying() => SystemAudio.IsAnyAudioPlaying();
-    public void ToggleMedia() => MediaKeys.TogglePlayPause();
+    private readonly MediaSessions _media = new();
+    public Task<bool> PauseMediaAsync() => _media.PauseWindowsAsync();
+    public Task ResumeMediaAsync() => _media.ResumeAsync();
 }
 
 /// <summary>Owns one cancellable playback sequence, including restoration on Stop and exit.</summary>
@@ -123,8 +126,7 @@ public sealed class AdhanPlayback : IDisposable
                     if (s.PauseOtherAudio)
                     {
                         SetPhase(PlaybackPhase.PausingOthers);
-                        _audio.ToggleMedia();
-                        paused = true;
+                        paused = await _audio.PauseMediaAsync().ConfigureAwait(false);
                         await Task.Delay(400, ct).ConfigureAwait(false);
                     }
                     _audio.SetVolume(original.Value);
@@ -160,19 +162,20 @@ public sealed class AdhanPlayback : IDisposable
                         try { await Task.Delay(TimeSpan.FromSeconds(s.ResumeDelaySeconds), ct).ConfigureAwait(false); }
                         catch (OperationCanceledException) { }
                     }
-                    // Do not toggle off a manual resume or a player that ignored pause.
+                    // Session-specific resume preserves players that already resumed.
                     if (!_audio.OtherAudioPlaying())
                     {
                         SetPhase(PlaybackPhase.FadingIn);
                         restore = _audio.GetVolume();
                         if (restore.HasValue && !ct.IsCancellationRequested) _audio.SetVolume(0);
-                        _audio.ToggleMedia();
+                        await _audio.ResumeMediaAsync().ConfigureAwait(false);
                         if (restore.HasValue && !ct.IsCancellationRequested)
                         {
                             try { await FadeAsync(0, restore.Value, s.FadeInSeconds, ct).ConfigureAwait(false); }
                             catch (OperationCanceledException) { }
                         }
                     }
+                    else await _audio.ResumeMediaAsync().ConfigureAwait(false);
                 }
             }
             catch (Exception ex) { Log.Error("Could not restore the other audio", ex); }

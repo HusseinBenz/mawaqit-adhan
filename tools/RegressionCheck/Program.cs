@@ -26,6 +26,13 @@ internal static class Program
             UiChecks();
             SynchronizationContext.SetSynchronizationContext(null);
             PlaybackChecks().GetAwaiter().GetResult();
+            if (args.Contains("--media-inspect"))
+            {
+                var manager = Windows.Media.Control.GlobalSystemMediaTransportControlsSessionManager.RequestAsync().AsTask().GetAwaiter().GetResult();
+                foreach (var session in manager.GetSessions())
+                    Console.WriteLine("MEDIA: " + session.SourceAppUserModelId + " = " + session.GetPlaybackInfo().PlaybackStatus);
+                Check(true, "native Windows media sessions enumerate without changing playback");
+            }
             if (args.Contains("--audio")) AudioCheck();
             if (args.Contains("--online")) DownloadCheck().GetAwaiter().GetResult();
             Console.WriteLine($"ALL {_checks} CHECKS PASSED");
@@ -126,6 +133,26 @@ internal static class Program
 
     private static async Task PlaybackChecks()
     {
+        var sessions = new MediaSessions();
+        var youtube = new FakeMediaSession { IsPlaying = true };
+        var mpc = new FakeMediaSession { IsPaused = true };
+        var ignored = new FakeMediaSession { IsPlaying = true, AcceptPause = false };
+        Check(await sessions.PauseAsync(new[] { youtube, mpc, ignored }), "playing media can be paused independently");
+        Check(youtube.IsPaused && youtube.Pauses == 1 && mpc.Pauses == 0 && mpc.Plays == 0 && mpc.IsPaused,
+            "YouTube playing plus MPC-HC paused: only YouTube receives pause; MPC-HC stays paused");
+        await sessions.ResumeAsync();
+        Check(youtube.Plays == 1 && mpc.Plays == 0 && ignored.Plays == 0,
+            "only successfully paused sessions resume");
+        await sessions.ResumeAsync();
+        Check(youtube.Plays == 1, "restoration clears remembered sessions");
+        await sessions.PauseAsync(new[] { youtube });
+        youtube.IsPlaying = true; youtube.IsPaused = false;
+        await sessions.ResumeAsync();
+        Check(youtube.Plays == 1, "manually resumed session receives no extra command");
+        await sessions.PauseAsync(new[] { youtube });
+        youtube.IsPlaying = false; youtube.IsPaused = false;
+        await sessions.ResumeAsync();
+        Check(youtube.Plays == 1, "stopped session is not restarted");
         var settings = new AppSettings { FadeOutSeconds = 1, FadeInSeconds = 1, ResumeDelaySeconds = 120 };
         var audio = new FakeEnvironment(); var player = new FakePlayer();
         using (var playback = new AdhanPlayback(player, audio))
@@ -207,6 +234,21 @@ internal static class Program
         catch (OperationCanceledException) { Check(!Directory.GetFiles(AppPaths.UserAudioDir, "*.part").Any(), "cancelled download cleans temporary files"); }
     }
 
+    private sealed class FakeMediaSession : IMediaSession
+    {
+        public bool IsPlaying { get; set; }
+        public bool IsPaused { get; set; }
+        public bool AcceptPause = true;
+        public int Pauses, Plays;
+        public Task<bool> PauseAsync()
+        {
+            Pauses++;
+            if (AcceptPause) { IsPlaying = false; IsPaused = true; }
+            return Task.FromResult(AcceptPause);
+        }
+        public Task<bool> PlayAsync() { Plays++; IsPlaying = true; IsPaused = false; return Task.FromResult(true); }
+    }
+
     private sealed class FakePlayer : IAudioPlayer
     {
         public int Starts;
@@ -226,6 +268,7 @@ internal static class Program
         public void SetVolume(float value) => Volume = value;
         public bool IsMuted() => false;
         public bool OtherAudioPlaying() => Playing;
-        public void ToggleMedia() { Toggles++; Playing = !Playing; }
+        public Task<bool> PauseMediaAsync() { Toggles++; Playing = false; return Task.FromResult(true); }
+        public Task ResumeMediaAsync() { if (!Playing) { Toggles++; Playing = true; } return Task.CompletedTask; }
     }
 }

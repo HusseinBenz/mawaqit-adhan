@@ -163,7 +163,7 @@ public sealed class SettingsForm : ThemedForm
 
         var fadeOut = Decimal("Fade out over", _s.FadeOutSeconds, v => _s.FadeOutSeconds = v, "seconds", indent: 34);
 
-        var pause = Check("Press play/pause so media actually stops", _s.PauseOtherAudio,
+        var pause = Check("Pause playing media sessions and resume afterward", _s.PauseOtherAudio,
             v => _s.PauseOtherAudio = v, indent: 34);
 
         var resumeDelay = Decimal("Resume", _s.ResumeDelaySeconds, v => _s.ResumeDelaySeconds = v,

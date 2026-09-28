@@ -1,13 +1,19 @@
 # Mawaqit Adhan
 
 A small Windows tray app that plays the adhan using a masjid's own Mawaqit timetable.
-Five adhan recordings are included. No account, installer, administrator rights,
+Five adhan recordings are included. No account, administrator rights,
 third-party runtime packages, web browser engine, or bundled .NET runtime is required.
 
-## Run
+## Install or upgrade
 
-Extract `dist/MawaqitAdhan-1.0.0-beta.1.zip` and run **MawaqitAdhan.exe**. Keep the `audio`
-folder beside it. An extracted copy is also available in `dist/MawaqitAdhan-1.0.0-beta.1`.
+Download `MawaqitAdhan-1.0.0-beta.2-Setup.exe` from [GitHub Releases](https://github.com/HusseinBenz/mawaqit-adhan/releases). The installer detects an existing installed or portable copy through its registration, startup entry, running process, or known folders. Confirm the detected folder, or browse to another portable copy. Settings, cache, downloaded voices, and startup preference are preserved. The app is closed gracefully before files are replaced, with rollback on failure.
+
+Installations appear in Windows Installed Apps for removal; uninstall keeps user data. Setup requires .NET Framework 4.8 and a writable per-user folder. For unattended installation: `Setup.exe --silent --dir "C:\path\MawaqitAdhan"` (does not launch the app).
+
+## Portable version
+
+Extract `dist/MawaqitAdhan-1.0.0-beta.2.zip` and run **MawaqitAdhan.exe**. Keep the `audio`
+folder beside it. An extracted copy is also available in `dist/MawaqitAdhan-1.0.0-beta.2`.
 On first launch, search for a masjid by name/city or paste its Mawaqit link, then
 choose **Use this**. **Test adhan** plays the selected recording; **Stop** stops it.
 Close normally hides the app in the tray. Use the tray menu's **Exit** to quit.
@@ -58,14 +64,16 @@ is valid only for that date. Notifications follow Windows notification settings.
 ## Other audio
 
 By default, when another app is producing audio, system volume fades down over
-2 seconds, a media play/pause key is sent, and volume returns to its original
+2 seconds, playing Windows media sessions receive a pause command, and volume returns to its original
 level for the adhan. After the adhan finishes, the app waits 5 seconds, resumes
 media and fades in over 3 seconds. These steps can be changed or disabled.
 
-Stop and exit cancel delays and finish restoring audio. If other audio has
-already resumed, the app skips the second toggle. Media keys are best effort:
-players that ignore them can keep playing, and a global key cannot reliably
-choose between multiple media players. A silent passage can affect detection.
+Stop and exit cancel delays and finish restoring audio. Only sessions successfully
+paused by the app are resumed, and only if they are still paused. Already-paused
+players are left alone. Session control requires Windows 10 version 1809 or later
+and a player that exposes Windows media controls. Unsupported players and older
+Windows versions are left alone; no global play/pause key is sent. A silent
+passage can affect detection.
 User volume changes during the adhan are preserved. The app does not override
 system mute; its own volume setting is multiplied by the system volume.
 
@@ -73,24 +81,25 @@ system mute; its own volume setting is multiplied by the system volume.
 
 Build on Windows with a modern .NET SDK and the **.NET Framework 4.8 Developer
 Pack/targeting pack**. The developer pack is only needed to build, not to run.
-There are no NuGet package dependencies.
+The Windows SDK 10.0.26100.0 is also needed to build the media controls (override
+`WindowsMediaSdkVersion` for another installed SDK). There are no NuGet package dependencies.
 
 ```powershell
-dotnet build src/MawaqitAdhan -c Release
+dotnet build src/MawaqitAdhan/MawaqitAdhan.csproj -c Release
 powershell -NoProfile -File tools/package.ps1
 ```
 
-The packaging script produces the portable folder, ZIP and SHA-256 checksum under
+The packaging script produces the portable folder, ZIP, standalone setup EXE, and SHA-256 checksums under
 `dist`. The beta ZIP is approximately 11.4 MiB; almost all of that is the five MP3 files.
 
 ```powershell
 # Offline regression checks; settings/data are isolated automatically.
-dotnet run --project tools/RegressionCheck -c Release
+dotnet run --project tools/RegressionCheck/RegressionCheck.csproj -c Release
 # Also verify native audio (plays a short tone), downloads and MP3 import.
-dotnet run --project tools/RegressionCheck -c Release -- --audio --online
+dotnet run --project tools/RegressionCheck/RegressionCheck.csproj -c Release -- --audio --online
 # Live Mawaqit parsing, calendar, DST, cache and search verification.
 $env:MAWAQIT_ADHAN_DATA_DIR = Join-Path $PWD 'artifacts/test-data/core'
-dotnet run --project tools/CoreCheck -c Release -- omar-witten grande-mosquee-de-paris anatolia-north-york
+dotnet run --project tools/CoreCheck/CoreCheck.csproj -c Release -- omar-witten grande-mosquee-de-paris anatolia-north-york
 Remove-Item Env:MAWAQIT_ADHAN_DATA_DIR
 ```
 
